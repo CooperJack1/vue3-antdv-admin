@@ -1,4 +1,5 @@
-import { RouterView, type RouteRecordRaw } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router'
+import { RouterView } from 'vue-router'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -12,6 +13,6 @@ const routes: Array<RouteRecordRaw> = [
       extOpenMode: 1,
     },
   },
-];
+]
 
-export default routes;
+export default routes

@@ -1,6 +1,7 @@
-import { RouterView, type RouteRecordRaw } from 'vue-router';
-import { PAGE_NOT_FOUND_NAME, REDIRECT_NAME } from '@/router/constant';
-import router from '@/router';
+import type { RouteRecordRaw } from 'vue-router'
+import { RouterView } from 'vue-router'
+import router from '@/router'
+import { PAGE_NOT_FOUND_NAME, REDIRECT_NAME } from '@/router/constant'
 
 /**
  * 重定向路由 主要用于刷新当前页面
@@ -23,32 +24,33 @@ export const REDIRECT_ROUTE: RouteRecordRaw = {
         hideInMenu: true,
       },
       beforeEnter: (to) => {
-        const { params, query } = to;
-        const { path, redirectType = 'path' } = params;
+        const { params, query } = to
+        const { path, redirectType = 'path' } = params
 
-        Reflect.deleteProperty(params, '_redirect_type');
-        Reflect.deleteProperty(params, 'path');
+        Reflect.deleteProperty(params, '_redirect_type')
+        Reflect.deleteProperty(params, 'path')
 
-        const _path = Array.isArray(path) ? path.join('/') : path;
+        const _path = Array.isArray(path) ? path.join('/') : path
         setTimeout(() => {
           if (redirectType === 'name') {
             router.replace({
               name: _path,
               query,
               params,
-            });
-          } else {
+            })
+          }
+          else {
             router.replace({
               path: _path.startsWith('/') ? _path : `/${_path}`,
               query,
-            });
+            })
           }
-        });
-        return true;
+        })
+        return true
       },
     },
   ],
-};
+}
 
 export const PAGE_NOT_FOUND_ROUTE: RouteRecordRaw = {
   path: '/:pathMatch(.*)*',
@@ -59,6 +61,6 @@ export const PAGE_NOT_FOUND_ROUTE: RouteRecordRaw = {
     hideInTabs: true,
   },
   component: () => import('@/views/error/404.vue'),
-};
+}
 
-export default [REDIRECT_ROUTE, PAGE_NOT_FOUND_ROUTE];
+export default [REDIRECT_ROUTE, PAGE_NOT_FOUND_ROUTE]

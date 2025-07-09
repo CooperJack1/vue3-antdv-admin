@@ -1,6 +1,6 @@
-import type { FormSchema } from '@/components/core/schema-form/';
-import Api from '@/api/';
-import { findPath } from '@/utils/common';
+import type { FormSchema } from '@/components/core/schema-form/'
+import Api from '@/api/'
+import { findPath } from '@/utils/common'
 
 export const roleSchemas: FormSchema<API.DeptDto>[] = [
   {
@@ -20,12 +20,12 @@ export const roleSchemas: FormSchema<API.DeptDto>[] = [
       },
       getPopupContainer: () => document.body,
       request: async ({ schema, formModel }) => {
-        const deptTree = await Api.systemDept.deptList({});
+        const deptTree = await Api.systemDept.deptList({})
         schema.value.componentProps.treeDefaultExpandedKeys = findPath(
           deptTree,
-          formModel['parentId'],
-        );
-        return deptTree;
+          formModel.parentId,
+        )
+        return deptTree
       },
     },
   },
@@ -38,4 +38,4 @@ export const roleSchemas: FormSchema<API.DeptDto>[] = [
       style: { width: '100%' },
     },
   },
-];
+]

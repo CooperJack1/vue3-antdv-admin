@@ -1,17 +1,17 @@
-import { createPinia } from 'pinia';
-import { createPersistedState } from 'pinia-plugin-persistedstate';
-import type { App } from 'vue';
+import type { App } from 'vue'
+import { createPinia } from 'pinia'
+import { createPersistedState } from 'pinia-plugin-persistedstate'
 
-const store = createPinia();
+const store = createPinia()
 // 本地持久化
 store.use(
   createPersistedState({
-    key: (id) => `__persisted__${id}`,
+    key: id => `__persisted__${id}`,
   }),
-);
+)
 
 export function setupStore(app: App<Element>) {
-  app.use(store);
+  app.use(store)
 }
 
-export { store };
+export { store }

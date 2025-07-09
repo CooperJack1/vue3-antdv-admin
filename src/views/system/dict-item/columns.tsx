@@ -1,10 +1,10 @@
-import { Tag } from 'ant-design-vue';
-import type { TableColumn } from '@/components/core/dynamic-table';
-import type { FormSchema } from '@/components/core/schema-form';
-import { formatToDateTime } from '@/utils/dateUtil';
+import type { TableColumn } from '@/components/core/dynamic-table'
+import type { FormSchema } from '@/components/core/schema-form'
+import { Tag } from 'ant-design-vue'
+import { formatToDateTime } from '@/utils/dateUtil'
 
-export type TableListItem = API.DictItemEntity;
-export type TableColumnItem = TableColumn<TableListItem>;
+export type TableListItem = API.DictItemEntity
+export type TableColumnItem = TableColumn<TableListItem>
 
 export const baseColumns: TableColumnItem[] = [
   {
@@ -30,11 +30,11 @@ export const baseColumns: TableColumnItem[] = [
     dataIndex: 'status',
     width: 80,
     customRender: ({ record }) => {
-      const status = record.status;
-      const enable = ~~status === 1;
-      const color = enable ? 'green' : 'red';
-      const text = enable ? '启用' : '停用';
-      return <Tag color={color}>{text}</Tag>;
+      const status = record.status
+      const enable = ~~status === 1
+      const color = enable ? 'green' : 'red'
+      const text = enable ? '启用' : '停用'
+      return <Tag color={color}>{text}</Tag>
     },
   },
   {
@@ -49,7 +49,7 @@ export const baseColumns: TableColumnItem[] = [
 
     customRender: ({ record }) => formatToDateTime(record.createdAt),
   },
-];
+]
 
 export const searchFormSchemas: FormSchema[] = [
   {
@@ -70,4 +70,4 @@ export const searchFormSchemas: FormSchema[] = [
     component: 'Input',
     colProps: { span: 8 },
   },
-];
+]

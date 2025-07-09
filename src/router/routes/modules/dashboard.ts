@@ -1,7 +1,7 @@
-import type { RouteRecordRaw } from 'vue-router';
-import { t } from '@/hooks/useI18n';
+import type { RouteRecordRaw } from 'vue-router'
+import { t } from '@/hooks/useI18n'
 
-const moduleName = 'dashboard';
+const moduleName = 'dashboard'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -24,6 +24,6 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
-];
+]
 
-export default routes;
+export default routes

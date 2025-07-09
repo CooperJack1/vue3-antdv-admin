@@ -9,18 +9,19 @@
  *  ==>www.baidu.com?a=3&b=4
  */
 export function setObjToUrlParams(baseUrl: string, obj: object): string {
-  let parameters = '';
-  let url = '';
+  let parameters = ''
+  let url = ''
   for (const key in obj) {
-    parameters += `${key}=${encodeURIComponent(obj[key])}&`;
+    parameters += `${key}=${encodeURIComponent(obj[key])}&`
   }
-  parameters = parameters.replace(/&$/, '');
+  parameters = parameters.replace(/&$/, '')
   if (/\?$/.test(baseUrl)) {
-    url = baseUrl + parameters;
-  } else {
-    url = baseUrl.replace(/\/?$/, '?') + parameters;
+    url = baseUrl + parameters
   }
-  return url;
+  else {
+    url = baseUrl.replace(/\/?$/, '?') + parameters
+  }
+  return url
 }
 
 /**
@@ -28,6 +29,6 @@ export function setObjToUrlParams(baseUrl: string, obj: object): string {
  * @param path 要处理的路径
  * @returns {string} 将/去重后的结果
  */
-export const uniqueSlash = (path: string) => path.replace(/(https?:\/)|(\/)+/g, '$1$2');
+export const uniqueSlash = (path: string) => path.replace(/(https?:\/)|(\/)+/g, '$1$2')
 // Safari 不支持以下正则(反向否定查找) shit!
 // export const uniqueSlash = (path: string) => path.replace(/(?<!:)\/{2,}/g, '/');

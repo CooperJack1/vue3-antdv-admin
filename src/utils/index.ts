@@ -1,9 +1,9 @@
-import { intersectionWith, isEqual, mergeWith, unionWith } from 'lodash-es';
-import { isArray, isObject } from './is';
-import type { App, Component, Plugin } from 'vue';
+import type { App, Component, Plugin } from 'vue'
+import { intersectionWith, isEqual, mergeWith, unionWith } from 'lodash-es'
+import { isArray, isObject } from './is'
 
 export function getFileExtension(filename) {
-  return /[.]/.exec(filename) ? /[^.]+$/.exec(filename)?.[0] : undefined;
+  return /[.]/.exec(filename) ? /[^.]+$/.exec(filename)?.[0] : undefined
 }
 /**
  * 将文件文件名转为文件类型后缀
@@ -12,45 +12,45 @@ export function getFileExtension(filename) {
  */
 export function parseMimeTypeToIconName(fileName) {
   if (!fileName) {
-    return 'file-type-unknown';
+    return 'file-type-unknown'
   }
-  const ext = getFileExtension(fileName)?.toLowerCase();
+  const ext = getFileExtension(fileName)?.toLowerCase()
   if (!ext) {
-    return 'file-type-unknown';
+    return 'file-type-unknown'
   }
   if (['png', 'jpg', 'jpeg', 'ico', 'gif', 'bmp', 'webp'].includes(ext)) {
-    return 'file-type-img';
+    return 'file-type-img'
   }
   if (['markdown', 'md', 'txt'].includes(ext)) {
-    return 'file-type-txt';
+    return 'file-type-txt'
   }
   if (['docx', 'doc', 'docm', 'dot', 'dotx'].includes(ext)) {
-    return 'file-type-docx';
+    return 'file-type-docx'
   }
   if (['csv', 'xls', 'xlsb', 'xlsm', 'xlsx', 'xltx'].includes(ext)) {
-    return 'file-type-excel';
+    return 'file-type-excel'
   }
   if (ext === 'pdf') {
-    return 'file-type-pdf';
+    return 'file-type-pdf'
   }
   if (['pptx', 'ppt', 'pptm'].includes(ext)) {
-    return 'file-type-ppt';
+    return 'file-type-ppt'
   }
   if (['zip', 'rar', '7z', 'tar', 'gz', 'tgz', 'tar.gz', 'tar.xz'].includes(ext)) {
-    return 'file-type-zip';
+    return 'file-type-zip'
   }
   if (['mp4', 'avi', 'wmv', 'rmvb', '3gp', 'mov', 'm4v', 'flv', 'mkv'].includes(ext)) {
-    return 'file-type-video';
+    return 'file-type-video'
   }
   if (['mp3', 'wav'].includes(ext)) {
-    return 'file-type-music';
+    return 'file-type-music'
   }
   if (
     ['vue', 'js', 'go', 'java', 'ts', 'css', 'html', 'php', 'c', 'cpp', 'swift', 'kt'].includes(ext)
   ) {
-    return 'file-type-code';
+    return 'file-type-code'
   }
-  return 'file-type-unknown';
+  return 'file-type-unknown'
 }
 
 /**
@@ -63,15 +63,15 @@ export function parseMimeTypeToIconName(fileName) {
  * @param {number} bytes file size
  */
 export function formatSizeUnits(bytes, decimals = 2) {
-  if (bytes === 0) return '0 Bytes';
+  if (bytes === 0) { return '0 Bytes' }
 
-  const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  const k = 1024
+  const dm = decimals < 0 ? 0 : decimals
+  const sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
 
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
 
-  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+  return `${Number.parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`
 }
 
 /**
@@ -94,40 +94,40 @@ export function deepMerge<T extends object | null | undefined, U extends object 
   mergeArrays: 'union' | 'intersection' | 'concat' | 'replace' = 'replace',
 ): T & U {
   if (!target) {
-    return source as T & U;
+    return source as T & U
   }
   if (!source) {
-    return target as T & U;
+    return target as T & U
   }
   return mergeWith({}, source, target, (sourceValue, targetValue) => {
     if (isArray(targetValue) && isArray(sourceValue)) {
       switch (mergeArrays) {
         case 'union':
-          return unionWith(sourceValue, targetValue, isEqual);
+          return unionWith(sourceValue, targetValue, isEqual)
         case 'intersection':
-          return intersectionWith(sourceValue, targetValue, isEqual);
+          return intersectionWith(sourceValue, targetValue, isEqual)
         case 'concat':
-          return sourceValue.concat(targetValue);
+          return sourceValue.concat(targetValue)
         case 'replace':
-          return targetValue;
+          return targetValue
         default:
-          throw new Error(`Unknown merge array strategy: ${mergeArrays as string}`);
+          throw new Error(`Unknown merge array strategy: ${mergeArrays as string}`)
       }
     }
     if (isObject(targetValue) && isObject(sourceValue)) {
-      return deepMerge(sourceValue, targetValue, mergeArrays);
+      return deepMerge(sourceValue, targetValue, mergeArrays)
     }
-    return undefined;
-  });
+    return undefined
+  })
 }
 
 export const withInstall = <T>(component: Component<T>, alias?: string) => {
-  const comp = component as any;
+  const comp = component as any
   comp.install = (app: App) => {
-    app.component(comp.name || comp.displayName, component);
+    app.component(comp.name || comp.displayName, component)
     if (alias) {
-      app.config.globalProperties[alias] = component;
+      app.config.globalProperties[alias] = component
     }
-  };
-  return component as T & Plugin;
-};
+  }
+  return component as T & Plugin
+}

@@ -1,7 +1,7 @@
-import type { RouteRecordRaw } from 'vue-router';
-import { t } from '@/hooks/useI18n';
+import type { RouteRecordRaw } from 'vue-router'
+import { t } from '@/hooks/useI18n'
 
-const moduleName = 'account';
+const moduleName = 'account'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -20,6 +20,6 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
-];
+]
 
-export default routes;
+export default routes

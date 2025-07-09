@@ -1,6 +1,6 @@
-import outsideLayout from './outsideLayout';
-import basic from './basic';
-import type { RouteRecordRaw } from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router'
+import basic from './basic'
+import outsideLayout from './outsideLayout'
 
 export const rootRoute: RouteRecordRaw = {
   path: '/',
@@ -11,7 +11,7 @@ export const rootRoute: RouteRecordRaw = {
     title: '根路由',
   },
   children: [],
-};
+}
 
 export const basicRoutes: Array<RouteRecordRaw> = [
   rootRoute,
@@ -19,4 +19,4 @@ export const basicRoutes: Array<RouteRecordRaw> = [
   ...outsideLayout,
   // 基础路由
   ...basic,
-];
+]

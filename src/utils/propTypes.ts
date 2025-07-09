@@ -1,18 +1,18 @@
+import type { CSSProperties, VNodeChild } from 'vue'
+import type { VueTypesInterface, VueTypeValidableDef } from 'vue-types'
 import {
   createTypes,
-  type VueTypeValidableDef,
-  type VueTypesInterface,
   toValidableType,
-} from 'vue-types';
-import type { CSSProperties, VNodeChild } from 'vue';
 
-export type VueNode = VNodeChild | JSX.Element;
+} from 'vue-types'
+
+export type VueNode = VNodeChild | JSX.Element
 
 type PropTypes = VueTypesInterface & {
-  readonly style: VueTypeValidableDef<CSSProperties>;
-  readonly VNodeChild: VueTypeValidableDef<VueNode>;
+  readonly style: VueTypeValidableDef<CSSProperties>
+  readonly VNodeChild: VueTypeValidableDef<VueNode>
   // readonly trueBool: VueTypeValidableDef<boolean>;
-};
+}
 const newPropTypes = createTypes({
   func: undefined,
   bool: undefined,
@@ -20,20 +20,22 @@ const newPropTypes = createTypes({
   number: undefined,
   object: undefined,
   integer: undefined,
-}) as PropTypes;
+}) as PropTypes
 
 class propTypes extends newPropTypes {
-  // a native-like validator that supports the `.validable` method
+  /**
+   * a native-like validator that supports the `.validable` method
+   */
   static override get style() {
     return toValidableType('style', {
       type: [String, Object],
-    });
+    })
   }
 
   static override get VNodeChild() {
     return toValidableType('VNodeChild', {
       type: undefined,
-    });
+    })
   }
 }
-export { propTypes };
+export { propTypes }

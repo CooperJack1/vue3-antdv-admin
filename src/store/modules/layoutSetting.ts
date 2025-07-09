@@ -1,8 +1,9 @@
-import { reactive, computed, watchPostEffect } from 'vue';
-import { defineStore } from 'pinia';
-import { theme as antdTheme } from 'ant-design-vue';
-import type { ThemeConfig } from 'ant-design-vue/es/config-provider/context';
-import { themeColor, type ThemeColor } from '@/layout/header/components/setting/constant';
+import type { ThemeConfig } from 'ant-design-vue/es/config-provider/context'
+import type { ThemeColor } from '@/layout/header/components/setting/constant'
+import { theme as antdTheme } from 'ant-design-vue'
+import { defineStore } from 'pinia'
+import { computed, reactive, watchPostEffect } from 'vue'
+import { themeColor } from '@/layout/header/components/setting/constant'
 
 /**
  * 项目默认配置项
@@ -15,24 +16,37 @@ import { themeColor, type ThemeColor } from '@/layout/header/components/setting/
  * contentWidth - 内容区布局： 流式 |  固定
  */
 
-export type LayoutSetting = {
-  navTheme: ThemeColor; // theme for nav menu
-  colorPrimary: string; // '#F5222D', // primary color of ant design
-  layout: 'sidemenu' | 'topmenu'; // nav menu position: `sidemenu` or `topmenu`
-  contentWidth: 'Fluid' | 'Fixed'; // layout of content: `Fluid` or `Fixed`, only works when layout is topmenu
-  fixedHeader: false; // sticky header
-  fixSiderbar: false; // sticky siderbar
-  colorWeak: false;
+export interface LayoutSetting {
+  /**
+   * theme for nav menu
+   */
+  navTheme: ThemeColor
+  colorPrimary: string /**
+                        * '#F5222D', // primary color of ant design
+                        */
+  layout: 'sidemenu' | 'topmenu' /**
+                                  * nav menu position: `sidemenu` or `topmenu`
+                                  */
+  contentWidth: 'Fluid' | 'Fixed' /**
+                                   * layout of content: `Fluid` or `Fixed`, only works when layout is topmenu
+                                   */
+  fixedHeader: false /**
+                      * sticky header
+                      */
+  fixSiderbar: false /**
+                      * sticky siderbar
+                      */
+  colorWeak: false
   menu: {
-    locale: true;
-  };
-  title: string;
-  pwa: false;
-  iconfontUrl: string;
+    locale: true
+  }
+  title: string
+  pwa: false
+  iconfontUrl: string
   /** 是否缓存标签页 */
-  cacheTabs: boolean;
+  cacheTabs: boolean
   // production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true'
-};
+}
 
 export const defaultSetting: LayoutSetting = {
   navTheme: 'dark', // theme for nav menu
@@ -50,51 +64,54 @@ export const defaultSetting: LayoutSetting = {
   iconfontUrl: '',
   cacheTabs: false,
   // production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true',
-};
+}
 
 export const useLayoutSettingStore = defineStore(
   'layout-setting',
   () => {
-    const layoutSetting = reactive({ ...defaultSetting });
+    const layoutSetting = reactive({ ...defaultSetting })
 
     const themeConfig = reactive<ThemeConfig>({
       algorithm: themeColor[layoutSetting.navTheme!] || antdTheme.defaultAlgorithm,
       token: {
         colorPrimary: layoutSetting.colorPrimary,
       },
-    });
+    })
 
     const getNavTheme = computed(() => {
-      return layoutSetting.navTheme;
-    });
+      return layoutSetting.navTheme
+    })
 
     watchPostEffect(() => {
       if (layoutSetting.navTheme) {
-        toggleTheme(layoutSetting.navTheme);
+        toggleTheme(layoutSetting.navTheme)
       }
       if (layoutSetting.colorPrimary) {
-        setColorPrimary(layoutSetting.colorPrimary);
+        setColorPrimary(layoutSetting.colorPrimary)
       }
-    });
+    })
 
-    // 切换主题
+    /**
+     * 切换主题
+     */
     const toggleTheme = (navTheme: ThemeColor) => {
       if (navTheme === 'realDark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('dark')
       }
-      themeConfig.algorithm = themeColor[navTheme];
-    };
+      else {
+        document.documentElement.classList.remove('dark')
+      }
+      themeConfig.algorithm = themeColor[navTheme]
+    }
 
     /** 设置主题色 */
     const setColorPrimary = (color: string) => {
-      themeConfig.token!.colorPrimary = color;
-    };
+      themeConfig.token!.colorPrimary = color
+    }
 
     const updateLayoutSetting = (settings: Partial<LayoutSetting>) => {
-      Object.assign(layoutSetting, settings);
-    };
+      Object.assign(layoutSetting, settings)
+    }
 
     return {
       layoutSetting,
@@ -103,9 +120,9 @@ export const useLayoutSettingStore = defineStore(
       toggleTheme,
       setColorPrimary,
       updateLayoutSetting,
-    };
+    }
   },
   {
     persist: true,
   },
-);
+)

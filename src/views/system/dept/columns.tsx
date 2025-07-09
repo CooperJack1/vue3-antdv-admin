@@ -1,8 +1,8 @@
-import type { TableColumn } from '@/components/core/dynamic-table';
-import { formatToDateTime } from '@/utils/dateUtil';
+import type { TableColumn } from '@/components/core/dynamic-table'
+import { formatToDateTime } from '@/utils/dateUtil'
 
-export type TableListItem = API.DeptEntity;
-export type TableColumnItem = TableColumn<TableListItem>;
+export type TableListItem = API.DeptEntity
+export type TableColumnItem = TableColumn<TableListItem>
 
 export const baseColumns: TableColumnItem[] = [
   {
@@ -23,4 +23,4 @@ export const baseColumns: TableColumnItem[] = [
     hideInSearch: true,
     customRender: ({ record }) => formatToDateTime(record.createdAt),
   },
-];
+]

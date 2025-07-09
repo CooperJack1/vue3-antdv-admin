@@ -1,13 +1,13 @@
-import type packageJSON from '../package.json';
-import type { ComponentRenderProxy, VNode, VNodeChild, PropType as VuePropType } from 'vue';
-import type { TinyMCE } from 'tinymce';
+import type { TinyMCE } from 'tinymce'
+import type { ComponentRenderProxy, VNode, VNodeChild, PropType as VuePropType } from 'vue'
+import type packageJSON from '../package.json'
 
 declare global {
   const __APP_INFO__: {
-    pkg: typeof packageJSON;
-    lastBuildTime: string;
-  };
-  const tinymce: TinyMCE;
+    pkg: typeof packageJSON
+    lastBuildTime: string
+  }
+  const tinymce: TinyMCE
 
   // declare interface Window {
   //   // Global vue app instance
@@ -15,59 +15,59 @@ declare global {
   // }
 
   // vue
-  declare type PropType<T> = VuePropType<T>;
-  declare type VueNode = VNodeChild | JSX.Element;
+  declare type PropType<T> = VuePropType<T>
+  declare type VueNode = VNodeChild | JSX.Element
 
   export type Writable<T> = {
     -readonly [P in keyof T]: T[P];
-  };
+  }
   type RemoveIndex<T> = {
     [K in keyof T as string extends K ? never : number extends K ? never : K]: T[K];
-  };
-  declare type Nullable<T> = T | null;
-  declare type NonNullable<T> = T extends null | undefined ? never : T;
-  declare type Recordable<T = any> = Record<string, T>;
+  }
+  declare type Nullable<T> = T | null
+  declare type NonNullable<T> = T extends null | undefined ? never : T
+  declare type Recordable<T = any> = Record<string, T>
   declare type Objectable<T extends object> = {
     [P in keyof T]: T[P];
-  } & Recordable;
-  declare type Key = string | number;
-  declare type ReadonlyRecordable<T = any> = {
-    readonly [key: string]: T;
-  };
-  declare type Indexable<T = any> = {
-    [key: string]: T;
-  };
+  } & Recordable
+  declare type Key = string | number
+  declare interface ReadonlyRecordable<T = any> {
+    readonly [key: string]: T
+  }
+  declare interface Indexable<T = any> {
+    [key: string]: T
+  }
   declare type DeepPartial<T> = {
     [P in keyof T]?: DeepPartial<T[P]>;
-  };
+  }
 
-  declare type TimeoutHandle = ReturnType<typeof setTimeout>;
-  declare type IntervalHandle = ReturnType<typeof setInterval>;
+  declare type TimeoutHandle = ReturnType<typeof setTimeout>
+  declare type IntervalHandle = ReturnType<typeof setInterval>
 
   declare interface ChangeEvent extends Event {
-    target: HTMLInputElement;
+    target: HTMLInputElement
   }
 
   declare interface WheelEvent {
-    path?: EventTarget[];
+    path?: EventTarget[]
   }
-  declare function parseInt(s: string | number, radix?: number): number;
+  declare function parseInt(s: string | number, radix?: number): number
 
-  declare function parseFloat(string: string | number): number;
+  declare function parseFloat(string: string | number): number
 
   namespace JSX {
     // tslint:disable no-empty-interface
-    type Element = VNode;
+    type Element = VNode
     // tslint:disable no-empty-interface
-    type ElementClass = ComponentRenderProxy;
+    type ElementClass = ComponentRenderProxy
     interface ElementAttributesProperty {
-      $props: any;
+      $props: any
     }
     interface IntrinsicElements {
-      [elem: string]: any;
+      [elem: string]: any
     }
     interface IntrinsicAttributes {
-      [elem: string]: any;
+      [elem: string]: any
     }
   }
 }
@@ -75,5 +75,5 @@ declare global {
 declare module 'vue' {
   export type JSXComponent<Props = any> =
     | { new (): ComponentPublicInstance<Props> }
-    | FunctionalComponent<Props>;
+    | FunctionalComponent<Props>
 }

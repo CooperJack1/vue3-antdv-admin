@@ -1,4 +1,4 @@
-import type { FormSchema } from '@/components/core/schema-form/';
+import type { FormSchema } from '@/components/core/schema-form/'
 
 export const baseSchemas: FormSchema<API.DictItemDto>[] = [
   {
@@ -50,4 +50,4 @@ export const baseSchemas: FormSchema<API.DictItemDto>[] = [
       span: 24,
     },
   },
-];
+]
