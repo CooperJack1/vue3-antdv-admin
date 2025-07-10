@@ -1,25 +1,25 @@
+import type { Component, VNodeProps } from 'vue'
 /**
  * Component list, register here to setting it in the form
  */
 import {
-  Input,
-  Select,
-  Radio,
-  Checkbox,
   AutoComplete,
   Cascader,
+  Checkbox,
   DatePicker,
+  Divider,
+  Input,
   InputNumber,
+  Radio,
+  Rate,
+  Select,
+  Slider,
   Switch,
   TimePicker,
-  TreeSelect,
   Tree,
-  Slider,
-  Rate,
-  Divider,
+  TreeSelect,
   Upload,
-} from 'ant-design-vue';
-import type { Component, VNodeProps } from 'vue';
+} from 'ant-design-vue'
 
 const componentMap = {
   Input,
@@ -47,20 +47,20 @@ const componentMap = {
   Upload,
 
   Divider,
-};
+}
 
 type ExtractPropTypes<T extends Component> = T extends new (...args: any) => any
   ? Writable<Omit<InstanceType<T>['$props'], keyof VNodeProps>>
-  : never;
+  : never
 
-type ComponentMapType = typeof componentMap;
+type ComponentMapType = typeof componentMap
 
-export type ComponentType = keyof ComponentMapType;
+export type ComponentType = keyof ComponentMapType
 
 export type ComponentMapProps = {
   [K in ComponentType]: ExtractPropTypes<ComponentMapType[K]>;
-};
+}
 
-export type AllComponentProps = ComponentMapProps[ComponentType];
+export type AllComponentProps = ComponentMapProps[ComponentType]
 
-export { componentMap };
+export { componentMap }

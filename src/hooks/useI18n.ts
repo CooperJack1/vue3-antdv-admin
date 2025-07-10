@@ -1,41 +1,41 @@
-import type { Composer } from 'vue-i18n';
-import * as locales from '@/locales';
+import type { Composer } from 'vue-i18n'
+import * as locales from '@/locales'
 
-type I18nGlobalTranslation = Composer['t'];
-type I18nTranslationRestParameters = [string, any];
+type I18nGlobalTranslation = Composer['t']
+type I18nTranslationRestParameters = [string, any]
 
 function getKey(namespace: string | undefined, key: string) {
   if (!namespace) {
-    return key;
+    return key
   }
   if (key.startsWith(namespace)) {
-    return key;
+    return key
   }
-  return `${namespace}.${key}`;
+  return `${namespace}.${key}`
 }
 
 export function useI18n(namespace?: string): {
-  t: I18nGlobalTranslation;
+  t: I18nGlobalTranslation
 } {
-  const i18n = locales.i18n;
+  const i18n = locales.i18n
   const normalFn = {
     t: (key: string) => {
-      return getKey(namespace, key);
+      return getKey(namespace, key)
     },
-  };
-
-  if (!i18n) {
-    return normalFn;
   }
 
-  const { t } = i18n.global;
+  if (!i18n) {
+    return normalFn
+  }
+
+  const { t } = i18n.global
 
   const tFn: I18nGlobalTranslation = (key: string, ...arg: any[]) => {
-    if (!key) return '';
-    if (!key.includes('.') && !namespace) return key;
-    return t(getKey(namespace, key), ...(arg as I18nTranslationRestParameters));
-  };
-  return Object.assign(i18n.global, { t: tFn });
+    if (!key) { return '' }
+    if (!key.includes('.') && !namespace) { return key }
+    return t(getKey(namespace, key), ...(arg as I18nTranslationRestParameters))
+  }
+  return Object.assign(i18n.global, { t: tFn })
 }
 
 /**
@@ -46,20 +46,22 @@ export function useI18n(namespace?: string): {
  */
 export function transformI18n(message: string | Title18n = '', isI18n = true) {
   if (!message) {
-    return '';
+    return ''
   }
-  const i18n = locales.i18n;
+  const i18n = locales.i18n
 
   // 处理动态路由的title, 格式 {zh_CN:"",en_US:""}
   if (typeof message === 'object') {
-    return message[i18n.global?.locale];
+    return message[i18n.global?.locale]
   }
 
   if (isI18n && typeof message === 'string') {
-    return i18n.global.t(message);
+    return i18n.global.t(message)
   }
-  return message;
+  return message
 }
 
-// 主要用于配合vscode i18nn ally插件的提示。此功能仅用于路由和菜单。请在其他地方使用 vue-i18n 的 useI18n
-export const t = (key: string) => key;
+/**
+ * 主要用于配合vscode i18nn ally插件的提示。此功能仅用于路由和菜单。请在其他地方使用 vue-i18n 的 useI18n
+ */
+export const t = (key: string) => key

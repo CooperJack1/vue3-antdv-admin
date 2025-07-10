@@ -1,3 +1,27 @@
+<script lang="ts" setup>
+import type { MenuInfo } from 'ant-design-vue/es/menu/src/interface'
+import type { TableProps } from 'ant-design-vue/es/table/Table'
+import { ColumnHeightOutlined } from '@ant-design/icons-vue'
+import { Dropdown, Menu, Tooltip } from 'ant-design-vue'
+import { ref, unref } from 'vue'
+import { useI18n } from '@/hooks/useI18n'
+import { useTableContext } from '../../hooks/useTableContext'
+
+  type SizeType = NonNullable<TableProps['size']>
+
+const { t } = useI18n()
+const table = useTableContext()
+
+const selectedKeysRef = ref<SizeType[]>([unref(table.innerPropsRef)?.size || 'large'])
+
+function handleMenuClick({ key }: MenuInfo & { key: SizeType }) {
+  selectedKeysRef.value = [key]
+  table.setProps({
+    size: key,
+  })
+}
+</script>
+
 <template>
   <Tooltip placement="top">
     <template #title>
@@ -7,7 +31,7 @@
     <Dropdown placement="bottom" :trigger="['click']">
       <ColumnHeightOutlined />
       <template #overlay>
-        <Menu v-model:selectedKeys="selectedKeysRef" selectable @click="handleMenuClick">
+        <Menu v-model:selected-keys="selectedKeysRef" selectable @click="handleMenuClick">
           <Menu.Item key="large">
             <span>{{ t('component.table.settingDensDefault') }}</span>
           </Menu.Item>
@@ -22,26 +46,3 @@
     </Dropdown>
   </Tooltip>
 </template>
-<script lang="ts" setup>
-  import { ref, unref } from 'vue';
-  import { ColumnHeightOutlined } from '@ant-design/icons-vue';
-  import { Tooltip, Dropdown, Menu } from 'ant-design-vue';
-  import { useTableContext } from '../../hooks/useTableContext';
-  import type { TableProps } from 'ant-design-vue/es/table/Table';
-  import type { MenuInfo } from 'ant-design-vue/es/menu/src/interface';
-  import { useI18n } from '@/hooks/useI18n';
-
-  type SizeType = NonNullable<TableProps['size']>;
-
-  const { t } = useI18n();
-  const table = useTableContext();
-
-  const selectedKeysRef = ref<SizeType[]>([unref(table.innerPropsRef)?.size || 'large']);
-
-  function handleMenuClick({ key }: MenuInfo & { key: SizeType }) {
-    selectedKeysRef.value = [key];
-    table.setProps({
-      size: key,
-    });
-  }
-</script>

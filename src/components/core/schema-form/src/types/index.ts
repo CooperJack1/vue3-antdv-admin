@@ -1,3 +1,3 @@
-export * from './form';
-export * from './component';
-export * from './hooks';
+export * from './component'
+export * from './form'
+export * from './hooks'

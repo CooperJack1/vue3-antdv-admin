@@ -1,11 +1,11 @@
-import { tableProps } from 'ant-design-vue/es/table';
-import tableConfig from './dynamic-table.config';
-import type { PropType, ExtractPublicPropTypes, EmitsToProps, EmitFn } from 'vue';
-import type { BookType } from 'xlsx';
-import type { TableColumn, OnChangeCallbackParams, EditableType, OnSave, OnCancel } from './types/';
-import type { SchemaFormProps } from '@/components/core/schema-form';
-import type { GetRowKey } from 'ant-design-vue/es/table/interface';
-import { isBoolean } from '@/utils/is';
+import type { GetRowKey } from 'ant-design-vue/es/table/interface'
+import type { EmitFn, EmitsToProps, ExtractPublicPropTypes, PropType } from 'vue'
+import type { BookType } from 'xlsx'
+import type { EditableType, OnCancel, OnChangeCallbackParams, OnSave, TableColumn } from './types/'
+import type { SchemaFormProps } from '@/components/core/schema-form'
+import { tableProps } from 'ant-design-vue/es/table'
+import { isBoolean } from '@/utils/is'
+import tableConfig from './dynamic-table.config'
 
 export const dynamicTableProps = {
   ...tableProps(),
@@ -97,11 +97,12 @@ export const dynamicTableProps = {
   /** 自定义数据导出格式函数 */
   exportFormatter: {
     type: Function as PropType<
-      (columns: TableColumn[], tableData: any[]) => { header: string[]; data: any[] }
+      (columns: TableColumn[], tableData: any[]) => { header: string[], data: any[] }
     >,
     default: null,
   },
-  /** 编辑行类型
+  /**
+   * 编辑行类型
    * @const `single`: 只能同时编辑一行
    * @const `multiple`: 同时编辑多行
    * @const `cell`: 可编辑单元格
@@ -121,21 +122,21 @@ export const dynamicTableProps = {
   },
   /** 只能编辑一行的的提示 */
   onlyOneLineEditorAlertMessage: String,
-} as const;
+} as const
 
 export type DynamicTableProps = ExtractPublicPropTypes<typeof dynamicTableProps> &
-  EmitsToProps<DynamicTableEmits>;
+  EmitsToProps<DynamicTableEmits>
 
 export const dynamicTableEmits = {
-  change: (...rest: OnChangeCallbackParams) => rest.length === 4,
+  'change': (...rest: OnChangeCallbackParams) => rest.length === 4,
   'toggle-advanced': (isAdvanced: boolean) => isBoolean(isAdvanced),
-  'fetch-error': (error) => error,
-  search: (params) => params,
-  reload: () => true,
+  'fetch-error': error => error,
+  'search': params => params,
+  'reload': () => true,
   'update:expandedRowKeys': (keys: Key[]) => keys,
   'expanded-rows-change': (keyValues: string[]) => Array.isArray(keyValues),
-};
+}
 
-export type DynamicTableEmits = typeof dynamicTableEmits;
+export type DynamicTableEmits = typeof dynamicTableEmits
 
-export type DynamicTableEmitFn = EmitFn<DynamicTableEmits>;
+export type DynamicTableEmitFn = EmitFn<DynamicTableEmits>

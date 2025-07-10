@@ -1,3 +1,3 @@
-import IFramePage from './index.vue';
+import IFramePage from './index.vue'
 
-export default IFramePage;
+export default IFramePage

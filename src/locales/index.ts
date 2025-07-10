@@ -1,19 +1,20 @@
-import { createI18n, type I18nOptions } from 'vue-i18n';
-import { localeMap } from './config';
-import { setHtmlPageLang, setLoadLocalePool } from './helper';
-import type { App } from 'vue';
-import { useLocaleStoreWithOut } from '@/store/modules/locale';
+import type { App } from 'vue'
+import type { I18nOptions } from 'vue-i18n'
+import { createI18n } from 'vue-i18n'
+import { useLocaleStoreWithOut } from '@/store/modules/locale'
+import { localeMap } from './config'
+import { setHtmlPageLang, setLoadLocalePool } from './helper'
 
 async function createI18nOptions(): Promise<I18nOptions> {
-  const localeStore = useLocaleStoreWithOut();
-  const locale = localeStore.getLocale;
-  const defaultLocal = await import(`./lang/${locale}.ts`);
-  const message = defaultLocal.default?.message ?? {};
+  const localeStore = useLocaleStoreWithOut()
+  const locale = localeStore.getLocale
+  const defaultLocal = await import(`./lang/${locale}.ts`)
+  const message = defaultLocal.default?.message ?? {}
 
-  setHtmlPageLang(locale);
+  setHtmlPageLang(locale)
   setLoadLocalePool((loadLocalePool) => {
-    loadLocalePool.push(locale);
-  });
+    loadLocalePool.push(locale)
+  })
 
   return {
     locale,
@@ -26,16 +27,18 @@ async function createI18nOptions(): Promise<I18nOptions> {
     silentTranslationWarn: true, // true - warning off
     missingWarn: false,
     silentFallbackWarn: true,
-  };
+  }
 }
-type Options = Awaited<ReturnType<typeof createI18nOptions>>;
+type Options = Awaited<ReturnType<typeof createI18nOptions>>
 
 // ReturnType<typeof createI18n<false, Options>>
-export let i18n = createI18n({} as Options);
+export let i18n = createI18n({} as Options)
 
-// setup i18n instance with global
+/**
+ * setup i18n instance with global
+ */
 export async function setupI18n(app: App) {
-  const options = await createI18nOptions();
-  i18n = createI18n(options);
-  app.use(i18n);
+  const options = await createI18nOptions()
+  i18n = createI18n(options)
+  app.use(i18n)
 }

@@ -1,18 +1,19 @@
-import { formProps, type FormProps } from 'ant-design-vue/es/form';
-import type { ColEx } from './types/component';
+import type { FormProps } from 'ant-design-vue/es/form'
 import type {
-  ExtractPublicPropTypes,
   ComponentInternalInstance,
   CSSProperties,
-  EmitsToProps,
   EmitFn,
-} from 'vue';
-import type { FieldMapToTime, FormSchema, RowProps } from './types/form';
-import type { ButtonProps } from '@/components/basic/button';
-import type { TableActionType } from '@/components/core/dynamic-table';
-import { isObject } from '@/utils/is';
+  EmitsToProps,
+  ExtractPublicPropTypes,
+} from 'vue'
+import type { ColEx } from './types/component'
+import type { FieldMapToTime, FormSchema, RowProps } from './types/form'
+import type { ButtonProps } from '@/components/basic/button'
+import type { TableActionType } from '@/components/core/dynamic-table'
+import { formProps } from 'ant-design-vue/es/form'
+import { isObject } from '@/utils/is'
 
-export const aFormPropKeys = Object.keys(formProps());
+export const aFormPropKeys = Object.keys(formProps())
 
 export const schemaFormProps = {
   ...formProps(),
@@ -67,7 +68,7 @@ export const schemaFormProps = {
   transformDateFunc: {
     type: Function as PropType<Fn>,
     default: (date: any) => {
-      return date?.format?.('YYYY-MM-DD HH:mm:ss') ?? date;
+      return date?.format?.('YYYY-MM-DD HH:mm:ss') ?? date
     },
   },
   rulesMessageJoinLabel: { type: Boolean as PropType<boolean>, default: true },
@@ -107,21 +108,21 @@ export const schemaFormProps = {
   },
 
   rowProps: Object as PropType<RowProps>,
-};
+}
 
 export const schemaFormEmits = {
-  register: (exposed: ComponentInternalInstance['exposed']) => isObject(exposed),
-  reset: (formModel: Recordable<any>) => isObject(formModel),
-  submit: (formModel: Recordable<any>) => isObject(formModel),
+  'register': (exposed: ComponentInternalInstance['exposed']) => isObject(exposed),
+  'reset': (formModel: Recordable<any>) => isObject(formModel),
+  'submit': (formModel: Recordable<any>) => isObject(formModel),
   'advanced-change': () => true,
-};
+}
 
-export type SchemaFormEmits = typeof schemaFormEmits;
+export type SchemaFormEmits = typeof schemaFormEmits
 
-export type SchemaFormEmitFn = EmitFn<SchemaFormEmits>;
+export type SchemaFormEmitFn = EmitFn<SchemaFormEmits>
 
 export type SchemaFormProps<T extends object = any> = ExtractPublicPropTypes<
   Omit<typeof schemaFormProps, 'schemas'>
 > & {
-  schemas: FormSchema<T>[];
-} & EmitsToProps<SchemaFormEmits>;
+  schemas: FormSchema<T>[]
+} & EmitsToProps<SchemaFormEmits>

@@ -1,30 +1,30 @@
-import { injectLocal, provideLocal } from '@vueuse/core';
+import type { DynamicTableProps } from '../dynamic-table'
 import type {
+  ExportData2Excel,
+  TableForm,
   TableMethods,
   TableState,
-  TableForm,
-  UseEditableType,
-  ExportData2Excel,
   UseColumnsType,
-} from './';
-import type { DynamicTableProps } from '../dynamic-table';
+  UseEditableType,
+} from './'
+import { injectLocal, provideLocal } from '@vueuse/core'
 
 type DynamicTableType = {
-  tableProps: DynamicTableProps;
+  tableProps: DynamicTableProps
 } & TableMethods &
-  TableState &
-  TableForm &
-  UseEditableType &
-  UseEditableType &
-  ExportData2Excel &
-  UseColumnsType;
+TableState &
+TableForm &
+UseEditableType &
+UseEditableType &
+ExportData2Excel &
+UseColumnsType
 
-const key = Symbol('dynamic-table');
+const key = Symbol('dynamic-table')
 
 export function createTableContext(instance: DynamicTableType) {
-  provideLocal(key, instance);
+  provideLocal(key, instance)
 }
 
 export function useTableContext() {
-  return injectLocal(key) as DynamicTableType;
+  return injectLocal(key) as DynamicTableType
 }

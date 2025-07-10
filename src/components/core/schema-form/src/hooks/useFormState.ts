@@ -1,75 +1,75 @@
-import { computed, reactive, ref, unref, watch, useAttrs } from 'vue';
-import { isUndefined, set, cloneDeep } from 'lodash-es';
-import type { DefineComponent } from 'vue';
-import type { AdvanceState } from '../types/hooks';
-import type { SchemaFormProps } from '../schema-form';
-import type { FormInstance } from 'ant-design-vue';
-import type { ComponentProps, RenderCallbackParams } from '../types';
-import { isFunction } from '@/utils/is';
+import type { FormInstance } from 'ant-design-vue'
+import type { DefineComponent } from 'vue'
+import type { SchemaFormProps } from '../schema-form'
+import type { ComponentProps, RenderCallbackParams } from '../types'
+import type { AdvanceState } from '../types/hooks'
+import { cloneDeep, isUndefined, set } from 'lodash-es'
+import { computed, reactive, ref, unref, useAttrs, watch } from 'vue'
+import { isFunction } from '@/utils/is'
 
-export type FormState = ReturnType<typeof useFormState>;
+export type FormState = ReturnType<typeof useFormState>
 
 export const useFormState = (props: SchemaFormProps) => {
-  const attrs = useAttrs();
+  const attrs = useAttrs()
   /** // TODO 将formSchema克隆一份，避免修改原有的formSchema */
-  const formPropsRef = ref<SchemaFormProps>({ ...props, schemas: cloneDeep(props.schemas) });
+  const formPropsRef = ref<SchemaFormProps>({ ...props, schemas: cloneDeep(props.schemas) })
   /** 表单项数据 */
-  const formModel = reactive({ ...props.initialValues });
+  const formModel = reactive({ ...props.initialValues })
   /** 表单默认数据 */
-  const defaultFormValues = reactive({ ...props.initialValues });
+  const defaultFormValues = reactive({ ...props.initialValues })
   /** 表单实例 */
-  const schemaFormRef = ref<FormInstance>();
+  const schemaFormRef = ref<FormInstance>()
   /** 缓存的表单值，用于恢复form-item v-if为true后的值 */
-  const cacheFormModel = { ...props.initialValues };
+  const cacheFormModel = { ...props.initialValues }
   /** 将所有的表单组件实例保存起来 */
-  const compRefMap = new Map<string, DefineComponent<any>>();
+  const compRefMap = new Map<string, DefineComponent<any>>()
   /** 初始时的componentProps，用于updateSchema更新时不覆盖componentProps为函数时的值 */
   const originComponentPropsFnMap = new Map<
     string,
     (opt: RenderCallbackParams) => ComponentProps
-  >();
+  >()
 
   const advanceState = reactive<AdvanceState>({
     isAdvanced: true,
     hideAdvanceBtn: false,
     isLoad: false,
     actionSpan: 6,
-  });
+  })
 
   // 获取表单所有属性
   const getFormProps = computed(() => {
     return {
       ...attrs,
       ...formPropsRef.value,
-    } as SchemaFormProps;
-  });
+    } as SchemaFormProps
+  })
 
   // 获取栅栏Row配置
   const getRowConfig = computed((): Recordable => {
-    const { baseRowStyle = {}, rowProps } = unref(getFormProps);
+    const { baseRowStyle = {}, rowProps } = unref(getFormProps)
     return {
       style: baseRowStyle,
       ...rowProps,
-    };
-  });
+    }
+  })
 
   const getFormActionBindProps = computed(
     (): Recordable => ({ ...getFormProps.value, ...advanceState }),
-  );
+  )
 
   watch(
     () => formPropsRef.value.schemas,
     () => {
       formPropsRef.value.schemas?.forEach((item) => {
         if (!originComponentPropsFnMap.has(item.field) && isFunction(item.componentProps)) {
-          originComponentPropsFnMap.set(item.field, item.componentProps);
+          originComponentPropsFnMap.set(item.field, item.componentProps)
         }
         if (!isUndefined(item.defaultValue)) {
-          set(defaultFormValues, item.field, item.defaultValue);
+          set(defaultFormValues, item.field, item.defaultValue)
         }
-      });
+      })
     },
-  );
+  )
 
   return {
     formModel,
@@ -83,5 +83,5 @@ export const useFormState = (props: SchemaFormProps) => {
     getRowConfig,
     getFormActionBindProps,
     originComponentPropsFnMap,
-  };
-};
+  }
+}

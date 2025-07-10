@@ -1,4 +1,4 @@
-import type { DefaultIconsType } from './icons.data';
+import type { DefaultIconsType } from './icons.data'
 
 export const svgIconProps = {
   prefix: {
@@ -13,18 +13,18 @@ export const svgIconProps = {
     type: [Number, String],
     default: 16,
   },
-};
+}
 
 export const iconPickerProps = {
   value: {
     type: String as PropType<DefaultIconsType>,
   },
   placeholder: String,
-};
+}
 
-export type IconProps = {
-  type?: 'svg' | 'iconify' | 'icon-font';
-  icon: DefaultIconsType | string;
-  color?: string;
-  size?: string | number;
-};
+export interface IconProps {
+  type?: 'svg' | 'iconify' | 'icon-font'
+  icon: DefaultIconsType | string
+  color?: string
+  size?: string | number
+}

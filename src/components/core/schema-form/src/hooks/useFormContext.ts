@@ -1,15 +1,15 @@
-import { injectLocal, provideLocal } from '@vueuse/core';
-import type { FormMethods } from './useFormMethods';
-import type { FormState } from './useFormState';
+import type { FormMethods } from './useFormMethods'
+import type { FormState } from './useFormState'
+import { injectLocal, provideLocal } from '@vueuse/core'
 
 export interface SchemaFormInstance extends FormMethods, FormState {}
 
-const key = Symbol('schema-form');
+const key = Symbol('schema-form')
 
 export async function createFormContext(instance: SchemaFormInstance) {
-  provideLocal(key, instance);
+  provideLocal(key, instance)
 }
 
 export function useFormContext(formProps = {}) {
-  return injectLocal(key, formProps) as SchemaFormInstance;
+  return injectLocal(key, formProps) as SchemaFormInstance
 }

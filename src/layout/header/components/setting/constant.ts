@@ -1,6 +1,6 @@
-import { theme } from 'ant-design-vue';
+import { theme } from 'ant-design-vue'
 
-const { defaultAlgorithm, darkAlgorithm } = theme;
+const { defaultAlgorithm, darkAlgorithm } = theme
 
 export const themeStyle = [
   {
@@ -15,15 +15,15 @@ export const themeStyle = [
     label: '暗黑模式',
     value: 'realDark',
   },
-] as const;
+] as const
 
 /** 主题色 */
 export const themeColor = {
   light: defaultAlgorithm,
   dark: defaultAlgorithm,
   realDark: darkAlgorithm,
-} as const;
-export type ThemeColor = keyof typeof themeColor;
+} as const
+export type ThemeColor = keyof typeof themeColor
 
 /** 主题色 */
 export const themeColors = [
@@ -67,7 +67,7 @@ export const themeColors = [
     key: 'purple',
     value: '#722ED1',
   },
-] as const;
+] as const
 
 /** 导航模式（布局方式） */
 export const layouts = [
@@ -79,7 +79,7 @@ export const layouts = [
     label: '顶部菜单布局',
     value: 'topmenu',
   },
-] as const;
+] as const
 
 /** 界面显示相关 */
 export const uiSettings = [
@@ -87,4 +87,4 @@ export const uiSettings = [
     label: '页签持久化',
     value: 'cacheTabs',
   },
-] as const;
+] as const

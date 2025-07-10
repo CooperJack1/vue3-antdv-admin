@@ -1,15 +1,15 @@
-import type { ColumnsType } from 'ant-design-vue/es/table';
-import type { FormSchema, GetFieldKeys } from '@/components/core/schema-form';
-import type { ActionItem } from './tableAction';
-import type { TableActionType } from '@/components/core/dynamic-table/src/types';
-import type { DataIndex } from 'ant-design-vue/es/vc-table/interface';
+import type { ColumnsType } from 'ant-design-vue/es/table'
+import type { DataIndex } from 'ant-design-vue/es/vc-table/interface'
+import type { ActionItem } from './tableAction'
+import type { TableActionType } from '@/components/core/dynamic-table/src/types'
+import type { FormSchema, GetFieldKeys } from '@/components/core/schema-form'
 
-export type ColumnType<T> = ColumnsType<T>[number];
+export type ColumnType<T> = ColumnsType<T>[number]
 
 export type CustomRenderParams<T extends object = Recordable> = Omit<
   Parameters<NonNullable<ColumnType<T>['customRender']>>[number],
   'column'
-> & { column: TableColumn<T> };
+> & { column: TableColumn<T> }
 
 // export type EditableConfig<T = any> = {
 //   /** 可编辑表格的类型，`单行编辑` | `多行编辑` | `可编辑单元格` */
@@ -31,15 +31,15 @@ export type CustomRenderParams<T extends object = Recordable> = Omit<
  * 表格属性
  */
 export type TableColumn<T extends object = Recordable> = ColumnType<T> & {
-  dataIndex?: GetFieldKeys<T> | ColumnKeyFlagType | Omit<DataIndex, string>;
+  dataIndex?: GetFieldKeys<T> | ColumnKeyFlagType | Omit<DataIndex, string>
   /** 指定搜索的字段 */
-  searchField?: string;
+  searchField?: string
   /** 在查询表单中不展示此项 */
-  hideInSearch?: boolean;
+  hideInSearch?: boolean
   /** 在 Table 中不展示此列 */
-  hideInTable?: boolean;
+  hideInTable?: boolean
   /** 传递给搜索表单 Form.Item 的配置,可以配置 rules */
-  formItemProps?: Partial<FormSchema<T>>;
+  formItemProps?: Partial<FormSchema<T>>
   /** 传递给可编辑表格 Form.Item 的配置,可以配置 rules */
   editFormItemProps?: Partial<FormSchema<T>> & {
     /**
@@ -49,21 +49,21 @@ export type TableColumn<T extends object = Recordable> = ColumnType<T> & {
      * Object.assign({}, TableColumn.formItemProps, TableColumn.editFormItemProps)
      * ```
      * @defaultValue 默认值为`true`
-     * */
-    extendSearchFormProps?: boolean;
-  };
+     */
+    extendSearchFormProps?: boolean
+  }
   /** 操作列，一般用于对表格某一行数据进行操作 */
-  actions?: (params: CustomRenderParams<T>, action: TableActionType) => ActionItem[];
+  actions?: (params: CustomRenderParams<T>, action: TableActionType) => ActionItem[]
   /** 当前单元格是否允许被编辑 */
-  editable?: boolean | ((params: CustomRenderParams<T>) => boolean);
+  editable?: boolean | ((params: CustomRenderParams<T>) => boolean)
   /** 当前单元格是否默认开启编辑，仅 `editableType`为`cell`时有效 */
-  defaultEditable?: boolean;
-};
+  defaultEditable?: boolean
+}
 
 export enum ColumnKeyFlag {
   ACTION = 'ACTION',
   INDEX = 'INDEX',
 }
 
-export const columnKeyFlags = Object.values(ColumnKeyFlag) as string[];
-export type ColumnKeyFlagType = `${ColumnKeyFlag}`;
+export const columnKeyFlags = Object.values(ColumnKeyFlag) as string[]
+export type ColumnKeyFlagType = `${ColumnKeyFlag}`

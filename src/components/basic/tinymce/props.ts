@@ -1,14 +1,15 @@
+import type { IPropTypes } from '@tinymce/tinymce-vue/lib/es2015/main/ts/components/EditorPropTypes'
+import type { Editor, Events } from 'tinymce'
 import {
   editorProps,
-  type IPropTypes,
-} from '@tinymce/tinymce-vue/lib/es2015/main/ts/components/EditorPropTypes';
-import { plugins as defaultPlugins, toolbar as defaultToolbar } from './constants';
-import type { Editor, Events } from 'tinymce';
+
+} from '@tinymce/tinymce-vue/lib/es2015/main/ts/components/EditorPropTypes'
+import { plugins as defaultPlugins, toolbar as defaultToolbar } from './constants'
 
 export interface TinymceProps extends Partial<IPropTypes> {
-  height?: string | number;
-  width?: string | number;
-  showImageUpload?: boolean;
+  height?: string | number
+  width?: string | number
+  showImageUpload?: boolean
 }
 
 export const tinymceProps = {
@@ -32,7 +33,7 @@ export const tinymceProps = {
     required: false,
     default: 'auto',
   },
-};
+}
 
 // https://www.tiny.cloud/docs/integrations/vue/#eventbinding
 type __TinymceEvents = {
@@ -40,7 +41,7 @@ type __TinymceEvents = {
     event: Events.EditorEventMap[K],
     editor: Editor,
   ];
-};
+}
 
 /**
  * 这里为什么这样写？因为 vue 编译器不支持复杂类型，需要用 @vue-ignore 注释显示跳过编译，否则会报错，但是这样 vue 就不会帮我们生成 emits 定义了

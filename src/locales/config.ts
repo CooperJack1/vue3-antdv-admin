@@ -1,9 +1,9 @@
-export type LocaleType = keyof typeof localeMap;
+export type LocaleType = keyof typeof localeMap
 
 export const localeMap = {
   zh_CN: 'zh_CN',
   en: 'en',
-} as const;
+} as const
 
 export const localeList = [
   {
@@ -18,4 +18,4 @@ export const localeList = [
     icon: '🇨🇳',
     title: '语言',
   },
-] as const;
+] as const

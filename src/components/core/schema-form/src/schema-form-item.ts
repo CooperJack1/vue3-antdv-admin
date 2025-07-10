@@ -1,5 +1,5 @@
-import type { TableActionType } from '@/components/core/dynamic-table';
-import type { FormSchema } from './types';
+import type { FormSchema } from './types'
+import type { TableActionType } from '@/components/core/dynamic-table'
 
 export const schemaFormItemProps = {
   formModel: {
@@ -18,6 +18,6 @@ export const schemaFormItemProps = {
   tableRowKey: {
     type: [String, Number] as PropType<Key>,
   },
-};
+}
 
-export type SchemaFormItemProps = typeof schemaFormItemProps;
+export type SchemaFormItemProps = typeof schemaFormItemProps

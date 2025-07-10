@@ -78,8 +78,8 @@ const _permissions = [
   'tool:storage:list',
   'tool:storage:delete',
   'upload:upload',
-] as const;
+] as const
 
-export type PermissionType = (typeof _permissions)[number];
+export type PermissionType = (typeof _permissions)[number]
 
 // console.log('permissions', permissions);

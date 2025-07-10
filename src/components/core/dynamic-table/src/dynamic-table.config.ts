@@ -1,5 +1,5 @@
-import type { SorterResult } from 'ant-design-vue/es/table/interface';
-import type { AlignType } from 'ant-design-vue/es/vc-table/interface';
+import type { SorterResult } from 'ant-design-vue/es/table/interface'
+import type { AlignType } from 'ant-design-vue/es/vc-table/interface'
 
 /** 表格配置 */
 export default {
@@ -19,22 +19,27 @@ export default {
   defaultPageSize: 10,
   // Default layout of table cells
   defaultAlign: 'center' as AlignType,
-  // Custom general sort function
+  /**
+   * Custom general sort function
+   */
   defaultSortFn: (sortInfo: SorterResult) => {
-    const { field, order } = sortInfo;
+    const { field, order } = sortInfo
     if (field && order) {
       return {
         // The sort field passed to the backend you
         field,
         // Sorting method passed to the background asc/desc
         order,
-      };
-    } else {
-      return {};
+      }
+    }
+    else {
+      return {}
     }
   },
-  // Custom general filter function
+  /**
+   * Custom general filter function
+   */
   defaultFilterFn: (data: Partial<Recordable<string[]>>) => {
-    return data;
+    return data
   },
-} as const;
+} as const

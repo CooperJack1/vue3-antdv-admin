@@ -1,40 +1,40 @@
 <script setup lang="ts">
-  import { computed, type CSSProperties, type VNode } from 'vue';
-  import { useAttrs } from 'vue';
-  import { Icon as IconifyIcon } from '@iconify/vue';
-  import { isString, omit } from 'lodash-es';
-  import SvgIcon from './src/SvgIcon.vue';
-  import IconFont from './src/icon-font';
-  import type { IconProps } from './src/props';
+import type { CSSProperties, VNode } from 'vue'
+import type { IconProps } from './src/props'
+import { Icon as IconifyIcon } from '@iconify/vue'
+import { isString, omit } from 'lodash-es'
+import { computed, useAttrs } from 'vue'
+import IconFont from './src/icon-font'
+import SvgIcon from './src/SvgIcon.vue'
 
-  const props = withDefaults(defineProps<IconProps>(), {
-    type: 'iconify',
-    size: 16,
-  });
+const props = withDefaults(defineProps<IconProps>(), {
+  type: 'iconify',
+  size: 16,
+})
 
-  const attrs = useAttrs();
+const attrs = useAttrs()
 
-  const getWrapStyle = computed((): CSSProperties => {
-    const { size, color } = props;
-    let fs = size;
-    if (isString(size)) {
-      fs = parseInt(size, 10);
-    }
+const getWrapStyle = computed((): CSSProperties => {
+  const { size, color } = props
+  let fs = size
+  if (isString(size)) {
+    fs = Number.parseInt(size, 10)
+  }
 
-    return {
-      fontSize: `${fs}px`,
-      color,
-      display: 'inline-flex',
-    };
-  });
+  return {
+    fontSize: `${fs}px`,
+    color,
+    display: 'inline-flex',
+  }
+})
 
-  /** svg 不支持 title 属性，需要在其元素内部手动添加 title 标签 */
-  const handleIconUpdated = (vnode: VNode) => {
-    const title = attrs.title;
-    if (vnode.el && title) {
-      vnode.el.insertAdjacentHTML?.('afterbegin', `<title>${title}</title>`);
-    }
-  };
+/** svg 不支持 title 属性，需要在其元素内部手动添加 title 标签 */
+const handleIconUpdated = (vnode: VNode) => {
+  const title = attrs.title
+  if (vnode.el && title) {
+    vnode.el.insertAdjacentHTML?.('afterbegin', `<title>${title}</title>`)
+  }
+}
 </script>
 
 <template>

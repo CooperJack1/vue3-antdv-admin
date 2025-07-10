@@ -1,12 +1,12 @@
-import { watchEffect, ref } from 'vue';
-import type { Ref } from 'vue';
+import type { Ref } from 'vue'
+import { ref, watchEffect } from 'vue'
 
 interface IntersectionObserverProps {
-  target: Ref<Element | null | undefined>;
-  root?: Ref<any>;
-  onIntersect: IntersectionObserverCallback;
-  rootMargin?: string;
-  threshold?: number;
+  target: Ref<Element | null | undefined>
+  root?: Ref<any>
+  onIntersect: IntersectionObserverCallback
+  rootMargin?: string
+  threshold?: number
 }
 
 export function useIntersectionObserver({
@@ -16,34 +16,34 @@ export function useIntersectionObserver({
   rootMargin = '0px',
   threshold = 0.1,
 }: IntersectionObserverProps) {
-  let cleanup = () => {};
-  const observer: Ref<Nullable<IntersectionObserver>> = ref(null);
+  let cleanup = () => {}
+  const observer: Ref<Nullable<IntersectionObserver>> = ref(null)
   const stopEffect = watchEffect(() => {
-    cleanup();
+    cleanup()
 
     observer.value = new IntersectionObserver(onIntersect, {
       root: root ? root.value : null,
       rootMargin,
       threshold,
-    });
+    })
 
-    const current = target.value;
+    const current = target.value
 
-    current && observer.value.observe(current);
+    current && observer.value.observe(current)
 
     cleanup = () => {
       if (observer.value) {
-        observer.value.disconnect();
-        target.value && observer.value.unobserve(target.value);
+        observer.value.disconnect()
+        target.value && observer.value.unobserve(target.value)
       }
-    };
-  });
+    }
+  })
 
   return {
     observer,
     stop: () => {
-      cleanup();
-      stopEffect();
+      cleanup()
+      stopEffect()
     },
-  };
+  }
 }

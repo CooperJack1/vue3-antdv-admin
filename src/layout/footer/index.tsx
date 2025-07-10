@@ -1,10 +1,10 @@
-import { defineComponent } from 'vue';
+import { CopyrightOutlined, GithubOutlined } from '@ant-design/icons-vue'
 
-import { GithubOutlined, CopyrightOutlined } from '@ant-design/icons-vue';
-import { Layout } from 'ant-design-vue';
-import styles from './index.module.less';
+import { Layout } from 'ant-design-vue'
+import { defineComponent } from 'vue'
+import styles from './index.module.less'
 
-const { Footer: ALayoutFooter } = Layout;
+const { Footer: ALayoutFooter } = Layout
 
 export default defineComponent({
   name: 'PageFooter',
@@ -25,10 +25,14 @@ export default defineComponent({
             </a>
           </div>
           <div class={styles.copyright}>
-            Copyright <CopyrightOutlined /> 2022 vue3-antdv-admin
+            Copyright
+            {' '}
+            <CopyrightOutlined />
+            {' '}
+            2022 vue3-antdv-admin
           </div>
         </a-layout-footer>
       </>
-    );
+    )
   },
-});
+})

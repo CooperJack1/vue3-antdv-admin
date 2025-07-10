@@ -2,7 +2,7 @@
 
 /**
  * @param { Promise } promise
- * @param { Object= } errorExt - Additional Information you can pass to the err object
+ * @param {object=} errorExt - Additional Information you can pass to the err object
  * @return { Promise }
  */
 export function to<T, U = Error>(
@@ -13,12 +13,12 @@ export function to<T, U = Error>(
     .then<[null, T]>((data: T) => [null, data])
     .catch<[U, undefined]>((err: U) => {
       if (errorExt) {
-        const parsedError = Object.assign({}, err, errorExt);
-        return [parsedError, undefined];
+        const parsedError = Object.assign({}, err, errorExt)
+        return [parsedError, undefined]
       }
 
-      return [err, undefined];
-    });
+      return [err, undefined]
+    })
 }
 
-export default to;
+export default to

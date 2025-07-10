@@ -1,27 +1,27 @@
 <script setup lang="ts">
-  import { ref, getCurrentInstance } from 'vue';
-  import { FullscreenOutlined, FullscreenExitOutlined } from '@ant-design/icons-vue';
-  import { useTableContext } from '../../hooks/useTableContext';
+import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons-vue'
+import { getCurrentInstance, ref } from 'vue'
+import { useTableContext } from '../../hooks/useTableContext'
 
-  const table = useTableContext();
-  const isFullscreen = table.isFullscreen;
-  const currentInstance = getCurrentInstance();
-  const open = ref(false);
+const table = useTableContext()
+const isFullscreen = table.isFullscreen
+const currentInstance = getCurrentInstance()
+const open = ref(false)
 
-  const updateAppContainerStyle = () => {
-    const appEl: HTMLDivElement =
-      currentInstance?.appContext.app._container || document.querySelector('#app');
+const updateAppContainerStyle = () => {
+  const appEl: HTMLDivElement
+      = currentInstance?.appContext.app._container || document.querySelector('#app')
 
-    appEl.style.setProperty('opacity', isFullscreen.value ? '0' : '1');
-    appEl.style.setProperty('visibility', isFullscreen.value ? 'hidden' : 'visible');
-    appEl.style.setProperty('position', isFullscreen.value ? 'absolute' : 'relative');
-  };
+  appEl.style.setProperty('opacity', isFullscreen.value ? '0' : '1')
+  appEl.style.setProperty('visibility', isFullscreen.value ? 'hidden' : 'visible')
+  appEl.style.setProperty('position', isFullscreen.value ? 'absolute' : 'relative')
+}
 
-  const toggleFullscreen = () => {
-    isFullscreen.value = !isFullscreen.value;
-    open.value = false;
-    updateAppContainerStyle();
-  };
+const toggleFullscreen = () => {
+  isFullscreen.value = !isFullscreen.value
+  open.value = false
+  updateAppContainerStyle()
+}
 </script>
 
 <template>

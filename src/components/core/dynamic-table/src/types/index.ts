@@ -1,3 +1,3 @@
-export * from './table';
-export * from './column';
-export * from './tableAction';
+export * from './column'
+export * from './table'
+export * from './tableAction'

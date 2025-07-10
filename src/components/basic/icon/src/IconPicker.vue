@@ -1,3 +1,54 @@
+<script lang="ts" setup>
+import { Icon } from '@iconify/vue'
+import { useDebounceFn } from '@vueuse/core'
+import { computed, ref } from 'vue'
+import { RecycleScroller } from 'vue-virtual-scroller'
+import { icons, setupIcons } from './icons.data'
+import { iconPickerProps } from './props'
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
+
+defineOptions({
+  inheritAttrs: false,
+})
+
+defineProps(iconPickerProps)
+
+// 添加默认图标集合
+setupIcons()
+
+const modelValue = defineModel<string>('value')
+
+const iconsMap = Object.entries(icons).reduce(
+  (prev, [cateName, curr]) => {
+    prev[cateName] = Object.keys(curr.icons).map(name => ({ name: `${curr.prefix}:${name}` }))
+    return prev
+  },
+  {
+    全部: Object.values(icons).flatMap(item =>
+      Object.keys(item.icons).map(name => ({ name: `${item.prefix}:${name}` })),
+    ),
+  } as Recordable<{ name: string }[]>,
+)
+
+const visible = ref(false)
+const activeCateName = ref('全部')
+const keyword = ref('')
+
+const iconFilteredList = computed(() => {
+  const list = iconsMap[activeCateName.value]
+  return list.filter(item => item.name.includes(keyword.value))
+})
+
+const handleSearchChange = useDebounceFn((e: Event) => {
+  keyword.value = (e.target as HTMLInputElement).value
+}, 100)
+
+const selectIcon = (name: string) => {
+  modelValue.value = name
+  visible.value = false
+}
+</script>
+
 <template>
   <a-form-item-rest>
     <a-popover
@@ -8,7 +59,7 @@
     >
       <template #title>
         <a-tabs
-          v-model:activeKey="activeCateName"
+          v-model:active-key="activeCateName"
           size="small"
           :tab-bar-style="{ marginBottom: '8px' }"
         >
@@ -52,69 +103,20 @@
     </a-popover>
   </a-form-item-rest>
 </template>
-<script lang="ts" setup>
-  import { ref, computed } from 'vue';
-  import { Icon } from '@iconify/vue';
-  import { RecycleScroller } from 'vue-virtual-scroller';
-  import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
-  import { useDebounceFn } from '@vueuse/core';
-  import { setupIcons, icons } from './icons.data';
-  import { iconPickerProps } from './props';
-
-  // 添加默认图标集合
-  setupIcons();
-
-  defineOptions({
-    inheritAttrs: false,
-  });
-  defineProps(iconPickerProps);
-
-  const modelValue = defineModel<string>('value');
-
-  const iconsMap = Object.entries(icons).reduce(
-    (prev, [cateName, curr]) => {
-      prev[cateName] = Object.keys(curr.icons).map((name) => ({ name: `${curr.prefix}:${name}` }));
-      return prev;
-    },
-    {
-      全部: Object.values(icons).flatMap((item) =>
-        Object.keys(item.icons).map((name) => ({ name: `${item.prefix}:${name}` })),
-      ),
-    } as Recordable<{ name: string }[]>,
-  );
-
-  const visible = ref(false);
-  const activeCateName = ref('全部');
-  const keyword = ref('');
-
-  const iconFilteredList = computed(() => {
-    const list = iconsMap[activeCateName.value];
-    return list.filter((item) => item.name.includes(keyword.value));
-  });
-
-  const handleSearchChange = useDebounceFn((e: Event) => {
-    keyword.value = (e.target as HTMLInputElement).value;
-  }, 100);
-
-  const selectIcon = (name: string) => {
-    modelValue.value = name;
-    visible.value = false;
-  };
-</script>
 
 <style lang="less" scoped>
   .select-box {
-    @apply h-300px min-w-350px;
+  @apply h-300px min-w-350px;
 
-    &-item {
-      @apply flex m-2px p-6px;
+  &-item {
+    @apply flex m-2px p-6px;
 
-      border: 1px solid #e5e7eb;
+    border: 1px solid #e5e7eb;
 
-      &:hover,
-      &.active {
-        @apply border-blue-600;
-      }
+    &:hover,
+    &.active {
+      @apply border-blue-600;
     }
   }
+}
 </style>

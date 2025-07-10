@@ -1,3 +1,17 @@
+<script lang="ts" setup>
+import { SearchOutlined } from '@ant-design/icons-vue'
+import { Tooltip } from 'ant-design-vue'
+import { useTableContext } from '../../hooks/useTableContext'
+
+const { tableProps, innerPropsRef, setProps, formSchemas } = useTableContext()
+
+function toggle() {
+  setProps({
+    search: !innerPropsRef.value.search,
+  })
+}
+</script>
+
 <template>
   <template v-if="formSchemas?.length && tableProps.search">
     <Tooltip placement="top">
@@ -8,16 +22,3 @@
     </Tooltip>
   </template>
 </template>
-<script lang="ts" setup>
-  import { SearchOutlined } from '@ant-design/icons-vue';
-  import { Tooltip } from 'ant-design-vue';
-  import { useTableContext } from '../../hooks/useTableContext';
-
-  const { tableProps, innerPropsRef, setProps, formSchemas } = useTableContext();
-
-  function toggle() {
-    setProps({
-      search: !innerPropsRef.value.search,
-    });
-  }
-</script>
