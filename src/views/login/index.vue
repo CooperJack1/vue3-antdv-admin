@@ -63,7 +63,7 @@ const handleSubmit = async () => {
       <!-- <svg-icon name="logo" :size="45" /> -->
       <img src="~@/assets/images/logo.png" width="45">
       <h1 class="mb-0 ml-2 text-3xl font-bold">
-        Antdv Admin
+        越行科技
       </h1>
     </div>
     <a-form layout="horizontal" :model="loginFormModel" @submit.prevent="handleSubmit">
