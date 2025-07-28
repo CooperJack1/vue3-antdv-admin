@@ -1,4 +1,5 @@
 import antfu from '@antfu/eslint-config'
+import regexpConfig from '@antfu/eslint-config/regexp' // 使用 ES 模块导入
 
 export default antfu(
   {
@@ -7,13 +8,12 @@ export default antfu(
     vue: true,
     typescript: true,
     unocss: true,
-    ignores: [],
+    ignores: ['node_modules', 'dist', 'public', 'coverage'], // 忽略不必要的目录
   },
   {
-    // Without `files`, they are general rules for all files
+    files: ['src/**/*.{js,ts,vue}'], // 限制规则应用范围
     rules: {
       'no-console': 'off',
-      // 'style/multiline-comment-style': ['error', 'starred-block'],
       'jsdoc/convert-to-jsdoc-comments': ['warn'],
       'n/prefer-global/process': 'off',
       'vue/first-attribute-linebreak': 'off',
@@ -22,10 +22,19 @@ export default antfu(
         'error',
         {
           caughtErrors: 'none',
-          varsIgnorePattern: '^_', // 忽略以 _ 开头的变量
-          argsIgnorePattern: '^_', // 忽略以 _ 开头的参数
+          varsIgnorePattern: '^_',
+          argsIgnorePattern: '^_',
         },
       ],
     },
-  },
-).override('antfu/regexp/rules', () => ({}))
+  }
+)
+// 修正正则表达式规则禁用方式（使用 ES 模块语法）
+.override({
+  files: ['**/*.{js,ts}'],
+  rules: {
+    ...Object.fromEntries(
+      Object.keys(regexpConfig.rules).map(rule => [rule, 'off'])
+    )
+  }
+})
