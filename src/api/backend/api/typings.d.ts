@@ -1281,4 +1281,9 @@ declare namespace API {
   type UserUpdateParams = {
     id: number;
   };
+
+  type CityDto = {
+    /** 城市名称 */
+    cityName: string;
+  };
 }
